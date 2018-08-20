@@ -164,6 +164,7 @@ def convert_issues(source, dest, dest_project_id, only_issues=None, blacklist_is
         if blacklist_issues and src_ticket_id in blacklist_issues:
             print("SKIP blacklisted ticket #%s" % src_ticket_id)
             continue
+        print("Converting ticket #%s" % src_ticket_id)
 
         src_ticket_data = src_ticket[3]
         src_ticket_priority = 'normal'
@@ -276,6 +277,7 @@ def convert_issues(source, dest, dest_project_id, only_issues=None, blacklist_is
 
         changelog = source.ticket.changeLog(src_ticket_id)
         is_attachment = False
+        print("Converting changelog: %d entries" % len(changelog))
         for change in changelog:
             change_type = change[2]
             if change_type == "attachment":
