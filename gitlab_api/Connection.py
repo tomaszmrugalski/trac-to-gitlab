@@ -39,7 +39,7 @@ class Connection(object):
     def __init__(self, url, access_token, ssl_verify):
         """
 
-        :param url: "https://www.neuhalfen.name/gitlab/api/v3"
+        :param url: "https://www.neuhalfen.name/gitlab/api/v4"
         :param access_token: "secretsecretsecret"
         """
         self.url = url
