@@ -149,7 +149,11 @@ def convert_issues(source, dest, dest_project_id, only_issues=None, blacklist_is
 
     get_all_tickets = xmlrpclib.MultiCall(source)
 
-    for ticket in source.ticket.query("max=0&order=id"):
+    # thomson: this specifies the range of tickets for potential migration.
+    # 0 - get all of them
+    # 10 - just get the first 10.
+    for ticket in source.ticket.query("max=0&milestone=Kea1.5&order=id"):
+        print("Retrieving info for ticket #%s" % ticket)
         get_all_tickets.ticket.get(ticket)
 
     for src_ticket in get_all_tickets():
