@@ -5,6 +5,9 @@
 # URL of the XML-RPC trac endpoint
 url: http://username:password@example.com/trac/login/xmlrpc
 
+# URL to the ticket (will be used to add a note with a reference to a ticket
+# in trac). Set to "" to disable.
+ticket_url: https://example.com/ticket
 
 [target]
 

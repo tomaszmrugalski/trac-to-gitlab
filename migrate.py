@@ -50,6 +50,7 @@ config.read('migrate.cfg')
 
 
 trac_url = config.get('source', 'url')
+trac_ticket_url = config.get('source', 'ticket_url')
 dest_project_name = config.get('target', 'project_name')
 uploads_path = config.get('target', 'uploads')
 
@@ -306,6 +307,10 @@ def convert_issues(source, dest, dest_project_id, only_issues=None, blacklist_is
                         binary_attachment = source.ticket.getAttachment(src_ticket_id, attachment[4].encode('utf8')).data
                 dest.comment_issue(dest_project_id, new_ticket, note, binary_attachment)
                 is_attachment = False
+
+        if (len(trac_ticket_url)):
+            trac_reference = Notes(note="Imported ticket [#%d](%s/%d) from trac at %s/%d" % (src_ticket_id, trac_ticket_url, src_ticket_id, trac_ticket_url, src_ticket_id))
+            dest.comment_issue(dest_project_id, new_ticket, trac_reference, None)
 
 def convert_wiki(source, dest, dest_project_id):
     if overwrite and (method == 'direct'):
