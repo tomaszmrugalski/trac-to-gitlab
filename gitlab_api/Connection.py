@@ -122,10 +122,10 @@ class Connection(object):
     def comment_issue(self ,project_id, ticket, note, binary_attachment):
         new_note_data = {
             "id" : project_id,
-            "issue_id" :ticket.id,
+            "issue_id" :ticket.iid,
             "body" : note.note
         }
-        self.post_json( "/projects/:project_id/issues/:issue_id/notes", new_note_data, project_id=project_id, issue_id=ticket.id)
+        cmt_response = self.post_json( "/projects/:project_id/issues/:issue_id/notes", new_note_data, project_id=project_id, issue_id=ticket.iid)
 
 
     def close_issue(self,project_id,ticket_id):
