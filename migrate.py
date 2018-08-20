@@ -170,7 +170,10 @@ def convert_issues(source, dest, dest_project_id, only_issues=None, blacklist_is
         if 'priority' in src_ticket_data:
             src_ticket_priority = src_ticket_data['priority']
         src_ticket_resolution = src_ticket_data['resolution']
-        src_ticket_severity = src_ticket_data['severity']
+        if (hasattr(src_ticket_data,'severity')):
+            src_ticket_severity = src_ticket_data['severity']
+        else:
+            src_ticket_severity = "medium"
         src_ticket_status = src_ticket_data['status']
         src_ticket_component = src_ticket_data.get('component', '')
         src_ticket_keywords = src_ticket_data['keywords']
@@ -179,11 +182,11 @@ def convert_issues(source, dest, dest_project_id, only_issues=None, blacklist_is
 
         new_labels = []
         if src_ticket_priority == 'high':
-            new_labels.append('high priority')
+            new_labels.append('high')
         elif src_ticket_priority == 'medium':
-            pass
+            new_labels.append('medium')
         elif src_ticket_priority == 'low':
-            new_labels.append('low priority')
+            new_labels.append('low')
 
         if src_ticket_resolution == '':
             # active ticket
@@ -204,7 +207,7 @@ def convert_issues(source, dest, dest_project_id, only_issues=None, blacklist_is
         elif src_ticket_severity == 'medium':
             pass
         elif src_ticket_severity == 'low':
-            new_labels.append("minor")
+            new_labels.append("low")
 
         # Current ticket types are: enhancement, defect, compilation, performance, style, scientific, task, requirement
         # new_labels.append(src_ticket_type)
@@ -231,6 +234,8 @@ def convert_issues(source, dest, dest_project_id, only_issues=None, blacklist_is
             new_state = 'reopened'
         elif src_ticket_status == 'closed':
             new_state = 'closed'
+        elif src_ticket_status == 'reviewing':
+            new_state = 'review'
         else:
             print("!!! unknown ticket status: %s" % src_ticket_status)
 
